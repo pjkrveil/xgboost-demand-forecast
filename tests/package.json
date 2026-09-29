@@ -4,9 +4,13 @@
   "scripts": {
     "test": "node booster.test.cjs",
     "test:wasm": "node wasm.test.cjs",
-    "test:models": "node registered-models.test.cjs"
+    "test:models": "node registered-models.test.cjs",
+    "test:charts": "node charts.test.cjs"
   },
   "dependencies": {
     "pyodide": "0.28.3"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
   }
 }

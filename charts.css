@@ -3,8 +3,8 @@
 .viz-readout{display:flex;align-items:center;gap:5px 14px;flex-wrap:wrap;min-height:58px;padding:8px 10px;margin-top:4px;background:var(--surface-soft,#f1f5f9);border-radius:8px;font-size:12px;font-variant-numeric:tabular-nums}.viz-readout strong,.viz-readout span{white-space:nowrap}.viz-readout strong{color:var(--text-primary,#0f172a)}.viz-readout span{color:var(--text-secondary,#475569)}
 
 .forecast-viz .viz-readout{display:block;height:auto;min-height:44px;padding:3px 6px;overflow:auto}
-.forecast-viz .viz-readout-table{width:100%;min-width:910px;table-layout:fixed;border-collapse:collapse}
-.forecast-viz .viz-readout-table th,.forecast-viz .viz-readout-table td{padding:3px 10px!important;font-size:11px!important;line-height:15px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-right:1px solid var(--border-primary,#dbe2ea);text-align:right}
+.forecast-viz .viz-readout-table{width:100%;min-width:860px;table-layout:auto;border-collapse:collapse}
+.forecast-viz .viz-readout-table th,.forecast-viz .viz-readout-table td{padding:3px 10px!important;font-size:11px!important;line-height:15px!important;white-space:nowrap;border-right:1px solid var(--border-primary,#dbe2ea);text-align:right}
 .forecast-viz .viz-readout-table th{font-weight:500;color:var(--text-muted,#64748b)}
 .forecast-viz .viz-error-panel{margin:6px 0;border-top:1px solid var(--border-primary,#dbe2ea);padding-top:6px}
 .forecast-viz .viz-error-caption{font-size:11px;color:var(--text-secondary,#475569);padding:0 8px}
@@ -26,3 +26,13 @@
 .forecast-viz .viz-legend-items button{white-space:nowrap}
 .forecast-viz .viz-legend-items button:disabled{opacity:.35;cursor:default}
 @media(max-width:600px){.forecast-viz .viz-legend-group{grid-template-columns:minmax(0,1fr);gap:2px}}
+
+/* Forecast/plan readout and opaque, overlapping GT residual bars. */
+.forecast-viz .viz-readout-table caption{text-align:left;padding:6px 10px 3px;font-size:11px;color:var(--text-secondary,#475569)}
+.forecast-viz .viz-readout-table tbody th{text-align:left;color:var(--text-primary,#0f172a)}
+.forecast-viz .viz-readout-table tbody tr+tr{border-top:1px solid var(--border-primary,#dbe2ea)}
+.forecast-viz .viz-readout-table .viz-readout-date{text-align:left;vertical-align:middle;white-space:normal;min-width:125px;max-width:180px}
+.forecast-viz .viz-weather-readout{min-width:440px;margin-top:6px;border-top:1px solid var(--border-primary,#dbe2ea)}
+.forecast-viz .viz-error-legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:5px 8px;font-size:11px;color:var(--text-secondary,#475569)}
+.forecast-viz .viz-error-legend span{display:inline-flex;align-items:center;gap:5px}
+.forecast-viz .viz-error-legend i{display:inline-block;width:10px;height:10px;border-radius:2px}
