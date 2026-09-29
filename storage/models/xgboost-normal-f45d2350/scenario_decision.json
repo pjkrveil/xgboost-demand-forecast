@@ -1,0 +1,104 @@
+{
+  "N": 10,
+  "delta": 1.7623206536528568,
+  "coverage": 0.9,
+  "normal_delta": 1.6448536269514722,
+  "empirical_delta": 1.7623206536528568,
+  "calibration_coverage": 0.9,
+  "calibration_end": "2023-12-31",
+  "candidates": [
+    {
+      "N": 3,
+      "eligible": true,
+      "score": 1.3946320333905597,
+      "folds": [
+        {
+          "year": 2020,
+          "normalized_interval_score": 1.5382609922367547
+        },
+        {
+          "year": 2021,
+          "normalized_interval_score": 1.3355892834642922
+        },
+        {
+          "year": 2022,
+          "normalized_interval_score": 1.2138529222488466
+        },
+        {
+          "year": 2023,
+          "normalized_interval_score": 1.490824935612346
+        }
+      ]
+    },
+    {
+      "N": 5,
+      "eligible": true,
+      "score": 1.3480342448496068,
+      "folds": [
+        {
+          "year": 2020,
+          "normalized_interval_score": 1.4172736395198775
+        },
+        {
+          "year": 2021,
+          "normalized_interval_score": 1.3767936821594748
+        },
+        {
+          "year": 2022,
+          "normalized_interval_score": 1.1819847972718078
+        },
+        {
+          "year": 2023,
+          "normalized_interval_score": 1.416084860447267
+        }
+      ]
+    },
+    {
+      "N": 7,
+      "eligible": true,
+      "score": 1.3383501754031824,
+      "folds": [
+        {
+          "year": 2020,
+          "normalized_interval_score": 1.363632612238813
+        },
+        {
+          "year": 2021,
+          "normalized_interval_score": 1.4132868941796795
+        },
+        {
+          "year": 2022,
+          "normalized_interval_score": 1.1941415828226742
+        },
+        {
+          "year": 2023,
+          "normalized_interval_score": 1.3823396123715628
+        }
+      ]
+    },
+    {
+      "N": 10,
+      "eligible": true,
+      "score": 1.3204372558186879,
+      "folds": [
+        {
+          "year": 2020,
+          "normalized_interval_score": 1.346948324422307
+        },
+        {
+          "year": 2021,
+          "normalized_interval_score": 1.3898616224001639
+        },
+        {
+          "year": 2022,
+          "normalized_interval_score": 1.1706903528822816
+        },
+        {
+          "year": 2023,
+          "normalized_interval_score": 1.3742487235699985
+        }
+      ]
+    }
+  ],
+  "method": "forward_year_normalized_interval_score_then_absolute_z_quantile"
+}

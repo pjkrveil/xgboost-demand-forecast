@@ -1,0 +1,333 @@
+{
+  "prediction": {
+    "n": 1825,
+    "MAE": 246363.45712846724,
+    "RMSE": 378055.57808302774,
+    "MAPE": 4.7121373161516935,
+    "MAPE_excluded_zero_days": 0,
+    "WAPE": 4.918955250419015,
+    "R2": 0.9873240452001437,
+    "bias_pct": 0.3231199156077244
+  },
+  "monthly_totals": {
+    "n": 12,
+    "MAE": 2703989.8553215177,
+    "RMSE": 3558759.463530243,
+    "MAPE": 1.5147779125008898,
+    "MAPE_excluded_zero_days": 0,
+    "WAPE": 1.7749659303218985,
+    "R2": 0.9984815571688456,
+    "bias_pct": 0.3231199156077273
+  },
+  "protocol": "synthetic_in_sample_sensitivity",
+  "independent_test": false,
+  "source_year": 2025,
+  "decision": {
+    "N": 10,
+    "delta": 1.7623206536528568,
+    "coverage": 0.9,
+    "normal_delta": 1.6448536269514722,
+    "empirical_delta": 1.7623206536528568,
+    "calibration_coverage": 0.9,
+    "calibration_end": "2023-12-31",
+    "candidates": [
+      {
+        "N": 3,
+        "eligible": true,
+        "score": 1.3946320333905597,
+        "folds": [
+          {
+            "year": 2020,
+            "normalized_interval_score": 1.5382609922367547
+          },
+          {
+            "year": 2021,
+            "normalized_interval_score": 1.3355892834642922
+          },
+          {
+            "year": 2022,
+            "normalized_interval_score": 1.2138529222488466
+          },
+          {
+            "year": 2023,
+            "normalized_interval_score": 1.490824935612346
+          }
+        ]
+      },
+      {
+        "N": 5,
+        "eligible": true,
+        "score": 1.3480342448496068,
+        "folds": [
+          {
+            "year": 2020,
+            "normalized_interval_score": 1.4172736395198775
+          },
+          {
+            "year": 2021,
+            "normalized_interval_score": 1.3767936821594748
+          },
+          {
+            "year": 2022,
+            "normalized_interval_score": 1.1819847972718078
+          },
+          {
+            "year": 2023,
+            "normalized_interval_score": 1.416084860447267
+          }
+        ]
+      },
+      {
+        "N": 7,
+        "eligible": true,
+        "score": 1.3383501754031824,
+        "folds": [
+          {
+            "year": 2020,
+            "normalized_interval_score": 1.363632612238813
+          },
+          {
+            "year": 2021,
+            "normalized_interval_score": 1.4132868941796795
+          },
+          {
+            "year": 2022,
+            "normalized_interval_score": 1.1941415828226742
+          },
+          {
+            "year": 2023,
+            "normalized_interval_score": 1.3823396123715628
+          }
+        ]
+      },
+      {
+        "N": 10,
+        "eligible": true,
+        "score": 1.3204372558186879,
+        "folds": [
+          {
+            "year": 2020,
+            "normalized_interval_score": 1.346948324422307
+          },
+          {
+            "year": 2021,
+            "normalized_interval_score": 1.3898616224001639
+          },
+          {
+            "year": 2022,
+            "normalized_interval_score": 1.1706903528822816
+          },
+          {
+            "year": 2023,
+            "normalized_interval_score": 1.3742487235699985
+          }
+        ]
+      }
+    ],
+    "method": "forward_year_normalized_interval_score_then_absolute_z_quantile"
+  },
+  "response": {
+    "heating_per_degree": 302291.98512271774,
+    "cooling_per_degree": 5.034827611902608e-11,
+    "rows": 3653,
+    "through": "2024-12-31"
+  },
+  "scenario_scores": [
+    {
+      "scenario": "minus",
+      "n": 365,
+      "MAE": 349448.01342815993,
+      "RMSE": 511999.28769614006,
+      "MAPE": 5.387797805011173,
+      "MAPE_excluded_zero_days": 0,
+      "WAPE": 5.7541753473689665,
+      "R2": 0.9838813160405478,
+      "bias_pct": 2.7031394503834387
+    },
+    {
+      "scenario": "plus",
+      "n": 365,
+      "MAE": 269582.9886885193,
+      "RMSE": 408127.1952450095,
+      "MAPE": 5.9041516206152655,
+      "MAPE_excluded_zero_days": 0,
+      "WAPE": 6.916097851678373,
+      "R2": 0.9676052329511219,
+      "bias_pct": -4.0651249320724485
+    },
+    {
+      "scenario": "mc_1",
+      "n": 365,
+      "MAE": 215283.89058750155,
+      "RMSE": 313953.8874275978,
+      "MAPE": 4.437541104437964,
+      "MAPE_excluded_zero_days": 0,
+      "WAPE": 4.363987151788885,
+      "R2": 0.99018214163546,
+      "bias_pct": 0.08877608193673944
+    },
+    {
+      "scenario": "mc_2",
+      "n": 365,
+      "MAE": 206528.58454972546,
+      "RMSE": 316797.84772405366,
+      "MAPE": 4.052175326957764,
+      "MAPE_excluded_zero_days": 0,
+      "WAPE": 4.07606379569881,
+      "R2": 0.991357388191317,
+      "bias_pct": 1.0327996286431973
+    },
+    {
+      "scenario": "mc_3",
+      "n": 365,
+      "MAE": 190973.80838842993,
+      "RMSE": 294942.5414297759,
+      "MAPE": 3.779020723736299,
+      "MAPE_excluded_zero_days": 0,
+      "WAPE": 3.7657423833142385,
+      "R2": 0.9920485668574746,
+      "bias_pct": 0.3648142707925097
+    }
+  ],
+  "generation_config": {
+    "base_temp_cdd": 24,
+    "base_temp_hdd": 18,
+    "demand_weight_power": 0.5,
+    "epochs": 2000,
+    "evaluation_mode": "recursive",
+    "feature_version": 2,
+    "half_life_days": 1095,
+    "horizon": 31,
+    "lags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      21,
+      28,
+      56,
+      91,
+      182,
+      364,
+      365
+    ],
+    "missing_target": "error",
+    "origin_stride": 7,
+    "rolling_windows": [
+      3,
+      7,
+      14,
+      28,
+      90,
+      180,
+      365
+    ],
+    "scenario": {
+      "climate_years": 5,
+      "auto_years": true,
+      "year_candidates": [
+        3,
+        5,
+        7,
+        10
+      ],
+      "delta": 1.64,
+      "auto_delta": true,
+      "coverage": 0.9,
+      "seasonal_radius": 7,
+      "mc_samples": 30,
+      "augmentation_samples": 3,
+      "scenario_seed": 42,
+      "representative": "median",
+      "latitude": null,
+      "temperature_prior_days": 10,
+      "temperature_min_samples": 10
+    },
+    "search_space": [
+      {
+        "base_temp_hdd": 16,
+        "demand_weight_power": 0,
+        "epochs": 400,
+        "half_life_days": 1095,
+        "max_depth": 3,
+        "target_transform": "seasonal_log_ratio"
+      },
+      {
+        "base_temp_hdd": 18,
+        "demand_weight_power": 0.5,
+        "epochs": 600,
+        "half_life_days": 1095,
+        "max_depth": 4,
+        "target_transform": "seasonal_log_ratio"
+      },
+      {
+        "base_temp_hdd": 20,
+        "demand_weight_power": 0.5,
+        "epochs": 600,
+        "half_life_days": 730,
+        "max_depth": 5,
+        "target_transform": "seasonal_log_ratio"
+      },
+      {
+        "base_temp_hdd": 16,
+        "demand_weight_power": 0,
+        "epochs": 400,
+        "half_life_days": 1825,
+        "max_depth": 3,
+        "target_transform": "log1p"
+      },
+      {
+        "base_temp_hdd": 18,
+        "demand_weight_power": 0.5,
+        "epochs": 600,
+        "half_life_days": 1095,
+        "max_depth": 4,
+        "target_transform": "log1p"
+      },
+      {
+        "base_temp_hdd": 20,
+        "demand_weight_power": 1,
+        "epochs": 600,
+        "half_life_days": 730,
+        "max_depth": 5,
+        "target_transform": "log1p"
+      }
+    ],
+    "target": "normal",
+    "target_transform": "seasonal_log_ratio",
+    "test_end": "2025-12-31",
+    "train_end": "2025-12-31",
+    "train_start": "2010-01-01",
+    "val_end": "2024-12-31",
+    "validation_stride": 31,
+    "window_size": 365,
+    "xgb_params": {
+      "colsample_bytree": 0.9,
+      "device": "cpu",
+      "eval_metric": "rmse",
+      "learning_rate": 0.04,
+      "max_bin": 128,
+      "max_depth": 4,
+      "min_child_weight": 15,
+      "n_estimators": 2000,
+      "n_jobs": 4,
+      "objective": "reg:squarederror",
+      "random_state": 42,
+      "reg_alpha": 0.02,
+      "reg_lambda": 10,
+      "subsample": 0.9,
+      "tree_method": "hist"
+    }
+  },
+  "monthly_aggregation": "mean_scenario_per_date"
+}

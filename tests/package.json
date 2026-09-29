@@ -1,0 +1,12 @@
+{
+  "name": "demand-forecast-validation",
+  "private": true,
+  "scripts": {
+    "test": "node booster.test.cjs",
+    "test:wasm": "node wasm.test.cjs",
+    "test:models": "node registered-models.test.cjs"
+  },
+  "dependencies": {
+    "pyodide": "0.28.3"
+  }
+}

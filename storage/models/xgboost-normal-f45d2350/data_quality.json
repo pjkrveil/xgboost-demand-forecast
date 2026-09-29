@@ -1,0 +1,14 @@
+{
+  "input_rows": 10844,
+  "daily_rows": 10844,
+  "start": "1997-01-01",
+  "end": "2026-09-09",
+  "missing_target_days": 0,
+  "invalid_temperature_days": 22,
+  "temperature_missing": {
+    "temp_avg": 0,
+    "temp_max": 11,
+    "temp_min": 14
+  },
+  "missing_target_policy": "error"
+}

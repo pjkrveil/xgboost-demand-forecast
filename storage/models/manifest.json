@@ -1,0 +1,23 @@
+[
+  {
+    "name": "일반 사입량 · 768b0664",
+    "directory": "768b06646be1496f9bb9990fbc536bb7",
+    "target": "normal",
+    "trained_through": "2025-12-31",
+    "model_bytes": 4206512
+  },
+  {
+    "name": "열병합 포함 사입량 · 3a1903ab",
+    "directory": "3a1903abca1645fcb774dbc2fd4a32b6",
+    "target": "chp",
+    "trained_through": "2025-12-31",
+    "model_bytes": 4214958
+  },
+  {
+    "name": "일반 사입량 · f45d2350",
+    "directory": "xgboost-normal-f45d2350",
+    "target": "normal",
+    "trained_through": "2025-12-31",
+    "model_bytes": 4211589
+  }
+]

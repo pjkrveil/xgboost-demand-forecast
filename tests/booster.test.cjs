@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');
+const {TreeBooster}=require('../booster.js');
+const fixture=require('./fixtures/xgboost-parity.json');
+const booster=new TreeBooster(fixture.document,fixture.columns);
+assert.deepEqual(booster.predict(fixture.rows),fixture.expected,'Native XGBoost 3.0.5 float32 inference parity');
+const cloned=()=>JSON.parse(JSON.stringify(fixture.document));
+let model=cloned();model.learner.gradient_booster.name='dart';assert.throws(()=>new TreeBooster(model,fixture.columns));
+model=cloned();model.learner.objective.name='binary:logistic';assert.throws(()=>new TreeBooster(model,fixture.columns));
+model=cloned();model.learner.gradient_booster.model.trees[0].left_children[0]=0;assert.throws(()=>new TreeBooster(model,fixture.columns));
+assert.throws(()=>new TreeBooster(fixture.document,[...fixture.columns].reverse()));
+assert.throws(()=>booster.predict([[1,2]]));
+model=cloned();model.learner.learner_model_param.base_score='['+model.learner.learner_model_param.base_score+']';assert.deepEqual(new TreeBooster(model,fixture.columns).predict(fixture.rows),fixture.expected);
+console.log('PASS: native parity, missing values, split boundaries, schema and unsupported model rejection');
