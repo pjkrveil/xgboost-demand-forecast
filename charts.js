@@ -16,6 +16,8 @@ window.ForecastChart = function(host, records, options={}) {
     {key:'observed_temp_avg',label:'실측 평균기온',color:'#475569',width:2,dash:'10 4',temperature:true}
   ];
   const finite=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
+  const fixedNumber=new Intl.NumberFormat('ko-KR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const fmt2=v=>finite(v)?fixedNumber.format(Number(v)):'—';
   const fmt=v=>finite(v)?Number(v).toLocaleString('ko-KR',{maximumFractionDigits:2}):'—';
   const node=(tag,attrs={},text)=>{const n=doc.createElement(tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!=null)n.textContent=text;return n;};
   const svgNode=(tag,attrs={},text)=>{const n=doc.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!=null)n.textContent=text;return n;};
@@ -89,8 +91,9 @@ window.ForecastChart = function(host, records, options={}) {
       for(const [key,label] of [['prediction','예측값'],['business_plan','계획량']]){
         const tr=node('tr',{'data-series':key}),e=errors(row,key);
         if(key==='prediction')tr.append(node('td',{rowspan:'2',class:'viz-readout-date'},row.date?dateText(row):'날짜 선택'));
-        tr.append(node('th',{scope:'row'},label));
-        for(const value of [fmt(row[key]),fmt(row.actual),fmt(e.difference),finite(e.error)?fmt(e.error)+'%':'—',key==='prediction'?fmt(row.prediction_minus):'—',key==='prediction'?fmt(row.prediction_plus):'—'])tr.append(node('td',{},value));
+        tr.append(node('th',{scope:'row'},label),node('td',{},fmt2(row[key])));
+        if(key==='prediction')tr.append(node('td',{rowspan:'2',class:'viz-readout-gt'},fmt2(row.actual)));
+        for(const value of [fmt2(e.difference),finite(e.error)?fmt2(e.error)+'%':'—',key==='prediction'?fmt2(row.prediction_minus):'—',key==='prediction'?fmt2(row.prediction_plus):'—'])tr.append(node('td',{},value));
         tbody.append(tr);
       }
       table.append(thead,tbody);
@@ -127,7 +130,7 @@ window.ForecastChart = function(host, records, options={}) {
     svg.onfocus=()=>select(index);svg.onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();select(index+(e.key==='ArrowRight'?1:-1));}if(e.key==='Escape'){if(zoom){zoom=null;draw();}else reset();}};
     const errorSeries=[
       {key:'prediction',label:'예측',positive:'#2563eb',negative:'#dc2626'},
-      {key:'business_plan',label:'계획',positive:'#16a34a',negative:'#eab308'}
+      {key:'business_plan',label:'계획',positive:'#eab308',negative:'#16a34a'}
     ];
     const residuals=data.map(r=>errorSeries.map(s=>({...s,value:errors(r,s.key).difference})).filter(s=>finite(s.value)));
     const paired=residuals.flat();
@@ -167,7 +170,7 @@ window.ForecastChart = function(host, records, options={}) {
       errorPanel.append(esvg,node('div',{class:'viz-error-caption'},`예측 비교 ${paired.filter(s=>s.key==='prediction').length}/${data.length}개 · 계획 비교 ${paired.filter(s=>s.key==='business_plan').length}/${data.length}개${paired.every(s=>s.value===0)?' · 모든 차이가 0입니다.':''}`));
     }
     const table=node('table'),thead=node('thead'),tr=node('tr');for(const label of ['날짜','예측값','계획량','실측 GT','예측−GT','예측 오차율','계획−GT','계획 오차율','−delta','+delta','GT 일수'])tr.append(node('th',{},label));thead.append(tr);table.append(thead);const body=node('tbody');
-    for(const r of data){const e=errors(r,'prediction'),plan=errors(r,'business_plan'),tr=node('tr');for(const v of [r.date,fmt(r.prediction),fmt(r.business_plan),fmt(r.actual),fmt(e.difference),finite(e.error)?fmt(e.error)+'%':'—',fmt(plan.difference),finite(plan.error)?fmt(plan.error)+'%':'—',fmt(r.prediction_minus),fmt(r.prediction_plus),`${r.gt}/${r.days}`])tr.append(node('td',{},v));body.append(tr);}table.append(body);scroll.replaceChildren(table);
+    for(const r of data){const e=errors(r,'prediction'),plan=errors(r,'business_plan'),tr=node('tr');for(const v of [r.date,fmt2(r.prediction),fmt2(r.business_plan),fmt2(r.actual),fmt2(e.difference),finite(e.error)?fmt2(e.error)+'%':'—',fmt2(plan.difference),finite(plan.error)?fmt2(plan.error)+'%':'—',fmt2(r.prediction_minus),fmt2(r.prediction_plus),`${r.gt}/${r.days}`])tr.append(node('td',{},v));body.append(tr);}table.append(body);scroll.replaceChildren(table);
     if(data.length){select(index);clearCursor();}
   }
   draw();

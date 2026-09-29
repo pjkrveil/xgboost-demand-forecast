@@ -36,3 +36,5 @@
 .forecast-viz .viz-error-legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:5px 8px;font-size:11px;color:var(--text-secondary,#475569)}
 .forecast-viz .viz-error-legend span{display:inline-flex;align-items:center;gap:5px}
 .forecast-viz .viz-error-legend i{display:inline-block;width:10px;height:10px;border-radius:2px}
+
+.forecast-viz .viz-readout-table .viz-readout-gt{vertical-align:middle}

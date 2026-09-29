@@ -16,9 +16,9 @@ const values=[
 const {host,dom}=chart(values),groups=[...host.querySelectorAll('.viz-error-bars')];
 const bars=i=>[...groups[i].querySelectorAll('rect')];
 assert.deepEqual(bars(0).map(b=>b.dataset.series),['prediction','business_plan']);
-assert.deepEqual(bars(0).map(b=>b.getAttribute('fill')),['#2563eb','#16a34a']);
+assert.deepEqual(bars(0).map(b=>b.getAttribute('fill')),['#2563eb','#eab308']);
 assert.deepEqual(bars(1).map(b=>b.dataset.series),['business_plan','prediction']);
-assert.deepEqual(bars(1).map(b=>b.getAttribute('fill')),['#eab308','#dc2626']);
+assert.deepEqual(bars(1).map(b=>b.getAttribute('fill')),['#16a34a','#dc2626']);
 for(const i of [0,1]){assert(Number(bars(i)[0].getAttribute('height'))>Number(bars(i)[1].getAttribute('height')));assert.equal(bars(i)[0].getAttribute('x'),bars(i)[1].getAttribute('x'));}
 assert(Number(bars(3)[1].getAttribute('width'))<Number(bars(3)[0].getAttribute('width')));
 assert.equal(bars(3)[0].getAttribute('height'),bars(3)[1].getAttribute('height'));
@@ -28,15 +28,17 @@ const readout=host.querySelector('.viz-readout');assert.equal(readout.children.l
 assert.equal(readout.querySelector('.viz-demand-readout tbody').rows.length,2);
 assert.equal(readout.querySelector('.viz-weather-readout tbody').rows.length,2);
 const textRows=()=>[...readout.querySelector('.viz-demand-readout tbody').rows].map(r=>[...r.cells].map(c=>c.textContent));
-assert.deepEqual(textRows()[0],['2026-01-01','예측값','130','100','30','30%','90','115']);
-assert.deepEqual(textRows()[1],['계획량','110','100','10','10%','—','—']);
+assert.deepEqual(textRows()[0],['2026-01-01','예측값','130.00','100.00','30.00','30.00%','90.00','115.00']);
+assert.deepEqual(textRows()[1],['계획량','110.00','10.00','10.00%','—','—']);
+assert.equal(readout.querySelectorAll('.viz-readout-gt').length,1);
+assert.equal(readout.querySelector('.viz-readout-gt').rowSpan,2);
 const svg=host.querySelector('.viz-stage svg');
 svg.onfocus();svg.onkeydown({key:'ArrowRight',preventDefault(){}});
-assert.equal(textRows()[0][4],'-5');assert.equal(textRows()[1][3],'-25');
+assert.equal(textRows()[0][4],'-5.00');assert.equal(textRows()[1][2],'-25.00');
 assert.equal(host.querySelector('.viz-stage .viz-crosshair').getAttribute('x1'),host.querySelector('.viz-error-svg .viz-crosshair').getAttribute('x1'));
 for(let i=0;i<3;i++)svg.onkeydown({key:'ArrowRight',preventDefault(){}});
-assert.equal(textRows()[0][5],'—');assert.equal(textRows()[1][4],'—'); // GT=0: no percentage division
-assert.equal(textRows()[1][3],'0');
+assert.equal(textRows()[0][5],'—');assert.equal(textRows()[1][3],'—'); // GT=0: no percentage division
+assert.equal(textRows()[1][2],'0.00');
 dom.window.close();
 const monthly=chart([
  {date:'2026-01-01',actual:100,prediction:110,business_plan:130,temp_avg:0,observed_temp_avg:2},
