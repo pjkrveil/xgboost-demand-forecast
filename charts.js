@@ -15,6 +15,8 @@ window.ForecastChart = function(host, records, options={}) {
     {key:'observed_temp_min',label:'실측 최저기온',color:'#15803d',width:1.8,dash:'3 3',temperature:true},
     {key:'observed_temp_avg',label:'실측 평균기온',color:'#475569',width:2,dash:'10 4',temperature:true}
   ];
+  // CSS tokens let an existing chart follow theme changes without resetting its view.
+  for(const s of series)s.color=`var(--chart-${s.key.replaceAll('_','-')}, ${s.color})`;
   const finite=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
   const fixedNumber=new Intl.NumberFormat('ko-KR',{minimumFractionDigits:2,maximumFractionDigits:2});
   const fmt2=v=>finite(v)?fixedNumber.format(Number(v)):'—';
@@ -40,7 +42,7 @@ window.ForecastChart = function(host, records, options={}) {
       const s=series.find(s=>s.key===key),present=available.includes(s);
       const label=s.temperature?s.label.replace(/^(입력|실측) /,''):s.label;
       const b=node('button',{type:'button','aria-pressed':String(present)}),swatch=node('span',{class:'viz-swatch'});
-      swatch.style.borderTop=`3px ${s.dash?'dashed':'solid'} ${s.color}`;b.append(swatch,doc.createTextNode(label));
+      swatch.style.borderTopWidth='3px';swatch.style.borderTopStyle=s.dash?'dashed':'solid';swatch.style.borderTopColor=s.color;b.append(swatch,doc.createTextNode(label));
       if(!present){b.disabled=true;b.title='해당 데이터 없음';}
       else b.onclick=()=>{hidden.has(s.key)?hidden.delete(s.key):hidden.add(s.key);b.setAttribute('aria-pressed',String(!hidden.has(s.key)));draw();};
       items.append(b);
@@ -120,7 +122,7 @@ window.ForecastChart = function(host, records, options={}) {
     const local=(element,e)=>{const m=element.getScreenCTM();if(!m)return null;const p=element.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(m.inverse());};
     const at=v=>Math.max(0,Math.min(data.length-1,Math.round((v-L)/(W-L-R)*Math.max(data.length-1,1))));
     let drag=null;
-    const shade=svgNode('rect',{y:T,height:H-T-B,fill:'#0284c7',opacity:'.15',visibility:'hidden'});svg.append(shade);
+    const shade=svgNode('rect',{y:T,height:H-T-B,fill:'var(--chart-prediction,#0369a1)',opacity:'.15',visibility:'hidden'});svg.append(shade);
     svg.onpointerdown=e=>{const p=local(svg,e);if(e.button!==0||!p||data.length<2||p.x<L||p.x>W-R||p.y<T||p.y>H-B)return;drag=p.x;svg.setPointerCapture(e.pointerId);e.preventDefault();};
     svg.onpointermove=e=>{const p=local(svg,e);if(!p)return;if(drag!==null){const end=Math.max(L,Math.min(W-R,p.x));shade.setAttribute('x',Math.min(drag,end));shade.setAttribute('width',Math.abs(drag-end));shade.setAttribute('visibility','visible');return;}if(p.x>=L&&p.x<=W-R&&p.y>=T&&p.y<=H-B)select(at(p.x));else clearCursor();};
     svg.onpointerup=e=>{if(drag===null)return;const start=drag,p=local(svg,e);drag=null;shade.setAttribute('visibility','hidden');if(svg.hasPointerCapture(e.pointerId))svg.releasePointerCapture(e.pointerId);if(!p||Math.abs(start-p.x)<8)return;const a=at(Math.min(start,p.x)),b=at(Math.max(start,p.x));if(b>a){zoom=[data[a].date,data[b].date];index=0;draw();}};
@@ -146,7 +148,7 @@ window.ForecastChart = function(host, records, options={}) {
       const EH=180,ET=20,EB=35,bound=Math.max(1,...paired.map(s=>Math.abs(s.value)))*1.1;
       const ey=v=>ET+(bound-v)/(2*bound)*(EH-ET-EB),zero=ey(0);
       const esvg=svgNode('svg',{viewBox:`0 0 ${W} ${EH}`,class:'viz-error-svg',tabindex:'0',role:'img','aria-label':'예측값 및 계획량의 실측 GT 대비 차이 막대 그래프'});
-      for(const value of [-bound,0,bound]){esvg.append(svgNode('line',{x1:L,x2:W-R,y1:ey(value),y2:ey(value),stroke:value===0?'#64748b':'#cbd5e1','stroke-width':value===0?1.4:.6}),svgNode('text',{x:L-10,y:ey(value)+4,'text-anchor':'end'},fmt(value)));}
+      for(const value of [-bound,0,bound]){esvg.append(svgNode('line',{x1:L,x2:W-R,y1:ey(value),y2:ey(value),stroke:value===0?'var(--text-muted,#64748b)':'var(--border-primary,#cbd5e1)','stroke-width':value===0?1.4:.6}),svgNode('text',{x:L-10,y:ey(value)+4,'text-anchor':'end'},fmt(value)));}
       const bw=Math.max(.5,Math.min(24,(W-L-R)/Math.max(data.length,1)*.7));
       residuals.forEach((bars,i)=>{
         // SVG paints later elements on top. Sort absolute magnitudes for both signs.

@@ -9,8 +9,15 @@ function startWorker(){worker=new Worker('./worker.js');worker.onmessage=({data}
 function request(action,payload){if(!worker)startWorker();return new Promise((resolve,reject)=>{const id=++nextId;pending.set(id,{resolve,reject});worker.postMessage({id,action,payload});});}
 async function task(fn){if(busy)return;busy=true;runToken++;currentAbort=new AbortController();$('controls').disabled=true;$('cancel').hidden=false;try{await fn();}catch(e){status(e.message,true);}finally{busy=false;$('controls').disabled=false;$('cancel').hidden=true;$('run').disabled=!activeModel;}}
 $('cancel').onclick=()=>{runToken++;currentAbort?.abort();worker?.terminate();worker=null;for(const t of pending.values())t.reject(Error('작업이 중지되었습니다. 모델과 입력 파일을 다시 불러오세요.'));pending.clear();activeModel=null;$('model-info').textContent='실행 환경이 초기화되었습니다.';for(const role of Object.keys(files)){files[role]=[];$('items-'+role).replaceChildren();}status('작업이 중지되었습니다. 모델과 입력 파일을 다시 불러오세요.');};
-$('theme').onclick=()=>{document.body.classList.toggle('dark');try{localStorage.setItem('forecast-theme',document.body.classList.contains('dark')?'dark':'light');}catch{}};
-try{document.body.classList.toggle('dark',localStorage.getItem('forecast-theme')==='dark');}catch{}
+function applyTheme(dark){
+ document.body.classList.toggle('dark',dark);
+ $('theme').textContent=dark?'라이트 모드':'다크 모드';
+ $('theme').setAttribute('aria-label',dark?'라이트 모드로 변경':'다크 모드로 변경');
+ document.querySelector('meta[name="theme-color"]').content=dark?'#111318':'#ffffff';
+}
+$('theme').onclick=()=>{const dark=!document.body.classList.contains('dark');applyTheme(dark);try{localStorage.setItem('forecast-theme',dark?'dark':'light');}catch{}};
+let savedTheme='light';try{savedTheme=localStorage.getItem('forecast-theme')||'light';}catch{}
+applyTheme(savedTheme==='dark');
 async function upload(file,inspect=false){const token=runToken;if(file.size>100*1024*1024)throw Error('개별 파일은 100MB 이하로 준비하세요.');const bytes=await file.arrayBuffer();if(token!==runToken)throw Error('작업이 중지되었습니다.');return request('upload',{id:String(++nextId),name:file.name,bytes,inspect});}
 function setModel(meta){activeModel=meta;const target=meta.target==='normal'?'일반 사입량':'열병합 포함 사입량';$('model-info').textContent=`${meta.display_name||target}\n${target} · ${meta.tree_count.toLocaleString()}개 트리\n모델 기준일 ${meta.trained_through}\n과거 ${meta.config.window_size}일 · ${meta.config.horizon}일씩 예측`;
  const start=new Date(meta.trained_through+'T00:00:00Z');start.setUTCDate(start.getUTCDate()+1);const end=new Date(start);end.setUTCDate(end.getUTCDate()+30);$('start').value=start.toISOString().slice(0,10);$('end').value=end.toISOString().slice(0,10);status('모델을 불러왔습니다. 기간과 입력 파일을 확인한 뒤 예측을 시작하세요.');}
